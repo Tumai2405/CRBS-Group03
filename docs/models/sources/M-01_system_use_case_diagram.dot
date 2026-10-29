@@ -1,0 +1,52 @@
+digraph CRBS_Use_Case { rankdir=LR; newrank=true; graph [bgcolor="white",fontname="Arial",fontsize=11,ranksep="0.65",nodesep="0.35",splines=ortho,concentrate=true]; node [fontname="Arial",fontsize=9,style="rounded,filled",fillcolor="#F4F7FB",color="#40566F"]; edge [fontname="Arial",fontsize=8,color="#536579",arrowsize=.65];
+node [shape=box,style="rounded,filled",fillcolor="#EAF0F8"]; Student; Lecturer; BookingOwner [label="Booking Owner\n(abstract)",style="rounded,filled,dashed",fillcolor="#F8F8F8"]; Staff [label="Facility Staff"]; Admin [label="System Admin"];
+{rank=same; Student; Lecturer; BookingOwner; Staff; Admin;}
+subgraph cluster_crbs { label="Campus Room & Equipment Booking System (CRBS)"; style="rounded"; color="#6C829A";
+UC01 [shape=ellipse,label="UC-01 Search Available Resources"];
+UC02 [shape=ellipse,label="UC-02 View Resource Availability"];
+UC03 [shape=ellipse,label="UC-03 Request supervised student practice\n(room + bundled equipment)"];
+UC04 [shape=ellipse,label="UC-04 View own booking status"];
+UC05 [shape=ellipse,label="UC-05 Cancel own booking"];
+UC06 [shape=ellipse,label="UC-06 View notifications"];
+UC07 [shape=ellipse,label="UC-07 Lecturer books teaching room"];
+UC08 [shape=ellipse,label="UC-08 Lecturer books seminar room"];
+UC09 [shape=ellipse,label="UC-09 Approve Booking"];
+UC10 [shape=ellipse,label="UC-10 Reject Booking"];
+UC11 [shape=ellipse,label="UC-11 Check-out Equipment"];
+UC12 [shape=ellipse,label="UC-12 Check-in Equipment"];
+UC13 [shape=ellipse,label="UC-13 Log Maintenance Incident"];
+UC14 [shape=ellipse,label="UC-14 Manage Accounts"];
+UC15 [shape=ellipse,label="UC-15 Manage Roles & Permissions"];
+UC16 [shape=ellipse,label="UC-16 Log in"];
+UC17 [shape=ellipse,label="UC-17 Confirm student supervision"];
+UC18 [shape=ellipse,label="UC-18 Maintain resource catalogue"];
+}
+{rank=same; UC01; UC02; UC03; UC04; UC05; UC06;}
+{rank=same; UC07; UC08; UC09; UC10; UC11; UC12; UC13;}
+{rank=same; UC14; UC15; UC16; UC17; UC18;}
+Student -> UC16;
+Student -> UC01;
+Student -> UC02;
+Student -> UC03;
+BookingOwner -> UC04;
+BookingOwner -> UC05;
+BookingOwner -> UC06;
+Student -> BookingOwner [arrowhead=empty, dir=forward];
+Lecturer -> BookingOwner [arrowhead=empty, dir=forward];
+Lecturer -> UC16;
+Lecturer -> UC07;
+Lecturer -> UC08;
+Lecturer -> UC17;
+Staff -> UC16;
+Staff -> UC09;
+Staff -> UC10;
+Staff -> UC11;
+Staff -> UC12;
+Staff -> UC13;
+Staff -> UC18;
+Admin -> UC16;
+Admin -> UC14;
+Admin -> UC15;
+UC03 -> UC01 [style=dashed,arrowhead=vee,label="includes search"];
+UC03 -> UC16 [style=dashed,arrowhead=vee,label="requires login"];
+}

@@ -1,0 +1,65 @@
+@startuml CRBS_M01
+left to right direction
+actor Student
+actor Lecturer
+actor "Booking Owner (abstract)" as BookingOwner
+actor "Facility Staff" as Staff
+actor "System Admin" as Admin
+rectangle "Campus Room & Equipment Booking System" {
+  package "Student — booking and self-service" {
+    usecase "UC-01 Search resources" as U1
+    usecase "UC-02 View availability" as U2
+    usecase "UC-03 Request supervised practice" as U3
+    usecase "UC-04 View own status" as U4
+    usecase "UC-05 Cancel own booking" as U5
+    usecase "UC-06 View notifications" as U6
+  }
+  package "Lecturer — own booking and endorsement" {
+    usecase "UC-07 Book teaching room" as U7
+    usecase "UC-08 Book seminar room" as U8
+    usecase "UC-17 Confirm supervision" as U17
+  }
+  package "Facility Staff — decisions and resources" {
+    usecase "UC-09 Approve eligible booking" as U9
+    usecase "UC-10 Reject booking" as U10
+    usecase "UC-11 Check out equipment" as U11
+    usecase "UC-12 Check in and inspect" as U12
+    usecase "UC-13 Manage maintenance incident" as U13
+    usecase "UC-18 Maintain resource catalogue" as U18
+  }
+  package "System Admin" {
+    usecase "UC-14 Manage accounts" as U14
+    usecase "UC-15 Manage roles/permissions" as U15
+  }
+  usecase "UC-16 Log in" as U16
+}
+note right of U16
+  UC-16 uses the shared authentication service for all four roles.
+  Each use case has one primary actor in the catalogue.
+end note
+Student -- U1
+Student -- U2
+Student -- U3
+BookingOwner -- U4
+BookingOwner -- U5
+BookingOwner -- U6
+Student --|> BookingOwner
+Lecturer --|> BookingOwner
+Lecturer -- U16
+Lecturer -- U7
+Lecturer -- U8
+Lecturer -- U17
+Staff -- U16
+Staff -- U9
+Staff -- U10
+Staff -- U11
+Staff -- U12
+Staff -- U13
+Staff -- U18
+Admin -- U16
+Admin -- U14
+Admin -- U15
+U3 ..> U1 : <<include>>
+U3 ..> U16 : <<include>>
+Student -- U16
+@enduml
